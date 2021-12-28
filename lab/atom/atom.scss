@@ -1,0 +1,194 @@
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating-rev {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.atom {
+  box-sizing: border-box;
+  position: relative;
+  height: 50px;
+  width: 50px;
+}
+
+.nucleus {
+  animation: rotating 5s linear infinite;
+  border-radius: 50%;
+  height: 40px;
+  left: 5px;
+  position: absolute;
+  top: 5px;
+  width: 40px;
+
+  .atom--1 & {
+    background: radial-gradient(circle at 10px 10px, #5c5cff, #000);
+  }
+  
+  .atom--2 & {
+    background: radial-gradient(circle at 10px 10px, #ff5c5c, #000);
+  }
+  
+  .atom--3 & {
+    background: radial-gradient(circle at 10px 10px, #5cff5c, #000);
+  }
+  
+  .atom--4 & {
+    background: radial-gradient(circle at 10px 10px, #ffff5c, #000);
+  }
+}
+
+.electrons {
+  animation: rotating-rev 3s linear infinite;
+  height: 50px;
+  width: 50px;
+}
+
+.electron {
+  height: 5px;
+  position: absolute;
+  width: 5px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 2px 3px, #fff, #ccc);
+
+  &--1 {
+    left: 23px;
+    top: 0;
+  }
+  
+  &--2 {
+    right: 0;
+    top: 23px;
+  }
+  
+  &--3 {
+    bottom: 0;
+    left: 23px;
+  }
+  
+  &--4 {
+    left: 0;
+    top: 23px;
+  }
+}
+
+.free {
+  &--0 {
+    & .electron--1, .electron--2, .electron--3, .electron--4 {
+      display: none;
+    }
+  }
+    
+  
+  &--1 {
+    & .electron--2, .electron--3, .electron--4 {
+      display: none;
+    }
+  }
+  
+  &--2 {
+    & .electron--2 {
+      bottom: 0;
+      left: 23px;
+      right: auto;
+      top: auto;
+    }
+
+    & .electron--3, .electron--4 {
+      display: none;
+    }
+  }
+
+  &--3 {
+    & .electron--2 {
+      bottom: 12px;
+      left: auto;
+      right: 4px;
+      top: auto;
+    }
+    
+    & .electron--3 {
+      bottom: 12px;
+      left: 4px;
+      right: auto;
+      top: auto;
+    }    
+    
+    & .electron--4 {
+      display: none;
+    }
+  }
+}
+
+.connections {
+  height: 50px;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 50px;
+}
+
+.connection {
+  background-color: #fff;
+  position: absolute;
+  display: none;
+
+  &--t {
+    border-radius: 0 0 50% 50%;
+    height: 10px;
+    left: 23px;
+    top: 0px;
+    width: 4px;
+
+    .atom.connected--t & {
+      display: block;
+    }
+  }
+
+  &--r {
+    border-radius: 50% 0 0 50%;
+    height: 4px;
+    right: 0px;
+    top: 23px;
+    width: 10px;
+
+    .atom.connected--r & {
+      display: block;
+    }
+  }
+  
+  &--b {
+    border-radius: 50% 50% 0 0;
+    height: 10px;
+    left: 23px;
+    bottom: 0px;
+    width: 4px;
+
+    .atom.connected--b & {
+      display: block;
+    }
+  }
+
+  &--l {
+    border-radius: 0 50% 50% 0;
+    height: 4px;
+    left: 0px;
+    top: 23px;
+    width: 10px;
+
+    .atom.connected--l & {
+      display: block;
+    }
+  }
+}

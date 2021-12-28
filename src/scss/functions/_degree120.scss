@@ -1,0 +1,17 @@
+@use 'sass:math';
+
+@function degree120-bottom($rect-size, $circle-radial) {
+  $origo: calc($rect-size / 2);
+  $distance: calc($circle-radial * math.sin(30deg));
+  @return calc($rect-size - $origo - $distance); 
+}
+
+@function degree120-left($rect-size, $circle-radial) {
+  $origo: calc($rect-size / 2);
+  $distance: calc($circle-radial * math.cos(30deg));
+  @return calc($rect-size - $origo - $distance);
+}
+
+@function degree120-right($rect-size, $circle-radial) {
+  @return degree120-left($rect-size, $circle-radial);
+}

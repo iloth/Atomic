@@ -1,0 +1,198 @@
+@use './settings/colors';
+@use './settings/sizes';
+@use './functions/_functions' as func;
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating-rev {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.atom {
+  box-sizing: border-box;
+  position: relative;
+  height: sizes.$atom;
+  width: sizes.$atom;
+}
+
+.nucleus {
+  animation: rotating 5s linear infinite;
+  border-radius: 50%;
+  height: sizes.$nucleus;
+  left: calc((sizes.$atom - sizes.$nucleus) / 2);
+  position: absolute;
+  top: calc((sizes.$atom - sizes.$nucleus) / 2);
+  width: sizes.$nucleus;
+
+  .atom--1 & {
+    background: radial-gradient(circle at 10px 10px, colors.$atom-1, #000);
+  }
+  
+  .atom--2 & {
+    background: radial-gradient(circle at 10px 10px, colors.$atom-2, #000);
+  }
+  
+  .atom--3 & {
+    background: radial-gradient(circle at 10px 10px, colors.$atom-3, #000);
+  }
+  
+  .atom--4 & {
+    background: radial-gradient(circle at 10px 10px, colors.$atom-4, #000);
+  }
+}
+
+.electrons {
+  animation: rotating-rev 3s linear infinite;
+  height: sizes.$atom;
+  width: sizes.$atom;
+}
+
+.electron {
+  height: sizes.$electron;
+  position: absolute;
+  width: sizes.$electron;
+  border-radius: 50%;
+  background: radial-gradient(circle at 2px 3px, colors.$electron-primary, colors.$electron-secondary);
+
+  &--1 {
+    left: calc(sizes.$atom / 2 - sizes.$electron / 2);
+    top: 0;
+  }
+  
+  &--2 {
+    right: 0;
+    top: calc(sizes.$atom / 2 - sizes.$electron / 2);
+  }
+  
+  &--3 {
+    bottom: 0;
+    left: calc(sizes.$atom / 2 - sizes.$electron / 2);
+  }
+  
+  &--4 {
+    left: 0;
+    top: calc(sizes.$atom / 2 - sizes.$electron / 2);
+  }
+}
+
+.free {
+  &--0 {
+    & .electron--1, .electron--2, .electron--3, .electron--4 {
+      display: none;
+    }
+  }
+    
+  
+  &--1 {
+    & .electron--2, .electron--3, .electron--4 {
+      display: none;
+    }
+  }
+  
+  &--2 {
+    & .electron--2 {
+      bottom: 0;
+      left: calc(sizes.$atom / 2 - sizes.$electron / 2);
+      right: auto;
+      top: auto;
+    }
+
+    & .electron--3, .electron--4 {
+      display: none;
+    }
+  }
+
+  &--3 {
+    & .electron--2 {
+      bottom: func.degree120-bottom(sizes.$atom, calc((sizes.$atom - sizes.$electron / 2) / 2));
+      left: auto;
+      right: func.degree120-right(sizes.$atom, calc((sizes.$atom - sizes.$electron / 2) / 2));
+      top: auto;
+    }
+    
+    & .electron--3 {
+      bottom: func.degree120-bottom(sizes.$atom, calc((sizes.$atom - sizes.$electron / 2) / 2));
+      left: func.degree120-left(sizes.$atom, calc((sizes.$atom - sizes.$electron / 2) / 2));
+      right: auto;
+      top: auto;
+    }    
+    
+    & .electron--4 {
+      display: none;
+    }
+  }
+}
+
+.connections {
+  height: sizes.$atom;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: sizes.$atom;
+
+  & .connection {
+    background-color: #fff;
+    position: absolute;
+    display: none;
+
+    &--t {
+      border-radius: 0 0 50% 50%;
+      height: calc(sizes.$electron * 2);
+      left: calc(sizes.$atom / 2 - sizes.$electron / 2);
+      top: 0;
+      width: sizes.$electron;
+
+      .atom.connected--t & {
+        display: block;
+      }
+    }
+
+    &--r {
+      border-radius: 50% 0 0 50%;
+      height: sizes.$electron;
+      right: 0;
+      top: calc(sizes.$atom / 2 - sizes.$electron / 2);
+      width: calc(sizes.$electron * 2);
+
+      .atom.connected--r & {
+        display: block;
+      }
+    }
+    
+    &--b {
+      border-radius: 50% 50% 0 0;
+      height: calc(sizes.$electron * 2);
+      left: calc(sizes.$atom / 2 - sizes.$electron / 2);
+      bottom: 0;
+      width: sizes.$electron;
+
+      .atom.connected--b & {
+        display: block;
+      }
+    }
+
+    &--l {
+      border-radius: 0 50% 50% 0;
+      height: sizes.$electron;
+      left: 0;
+      top: calc(sizes.$atom / 2 - sizes.$electron / 2);
+      width: calc(sizes.$electron * 2);
+
+      .atom.connected--l & {
+        display: block;
+      }
+    }
+  }
+}
